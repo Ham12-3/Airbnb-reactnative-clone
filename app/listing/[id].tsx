@@ -1,8 +1,13 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 import React from "react";
 import { useLocalSearchParams } from "expo-router";
 
 import listingsData from "@/assets/data/airbnb-listings.json";
+import Animated from "react-native-reanimated";
+
+const IMG_HEIGHT = 300;
+
+const { width } = Dimensions.get("window");
 
 const Page = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -10,10 +15,26 @@ const Page = () => {
   const listing = (listingsData as any[]).find((item) => item.id === id);
 
   return (
-    <View>
-      <Text>Page</Text>
+    <View style={styles.container}>
+      <Animated.ScrollView>
+        <Animated.Image
+          source={{ uri: listing.xl_picture_url }}
+          style={styles.image}
+        />
+      </Animated.ScrollView>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  image: {
+    height: IMG_HEIGHT,
+    width,
+  },
+});
 
 export default Page;
