@@ -5,9 +5,10 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
+  Share,
 } from "react-native";
-import React from "react";
-import { useLocalSearchParams } from "expo-router";
+import React, { useLayoutEffect } from "react";
+import { useLocalSearchParams, useNavigation } from "expo-router";
 
 import listingsData from "@/assets/data/airbnb-listings.json";
 import Animated, {
@@ -34,6 +35,31 @@ const Page = () => {
 
   const scrollOffset = useScrollViewOffset(scrollRef);
 
+  const navigation = useNavigation();
+
+  const shareListing = async () => {
+    try {
+      await Share.share({
+        title: listing.name,
+        url: listing.listing_url,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <View style={styles.bar}>
+          <TouchableOpacity style={styles.roundButton} onPress={shareListing}>
+            <Ionicons name="share-outline" size={22} color={"#000"} />
+          </TouchableOpacity>
+        </View>
+      ),
+    });
+  }, []);
+
   const imageAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -42,6 +68,13 @@ const Page = () => {
             scrollOffset.value,
             [-IMG_HEIGHT, 0, IMG_HEIGHT],
             [-IMG_HEIGHT / 2, 0, IMG_HEIGHT * 0.75]
+          ),
+        },
+        {
+          scale: interpolate(
+            scrollOffset.value,
+            [-IMG_HEIGHT, 0, IMG_HEIGHT],
+            [2, 1, 1]
           ),
         },
       ],
