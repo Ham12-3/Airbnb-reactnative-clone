@@ -1,5 +1,5 @@
 # Airbnb-reactnative-clone
-<h3>an Airbnb mobile app clone built with react native</h3>
+<h3>an Airbnb mobile app clone built with react native expo, Animated,and clerk authentication</h3>
 
 To start the project use:
 ```shell
