@@ -1,7 +1,8 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import { defaultStyles } from "@/constants/Styles";
+import MapView from "react-native-map-clustering";
 
 interface Props {
   listings: any;
@@ -18,12 +19,21 @@ const ListingsMap = ({ listings }: Props) => {
   return (
     <View style={defaultStyles.container}>
       <MapView
-        style={styles.map}
+        style={StyleSheet.absoluteFill}
         provider={PROVIDER_GOOGLE}
         showsUserLocation
         showsMyLocationButton
         initialRegion={INITIAL_REGION}
-      />
+      >
+        {listings.features.map((item: any) => (
+          <Marker
+            coordinate={{
+              latitude: +item.properties.latitude,
+              longitude: +item.properties.longitude,
+            }}
+          />
+        ))}
+      </MapView>
     </View>
   );
 };
@@ -31,10 +41,6 @@ const ListingsMap = ({ listings }: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  map: {
-    width: "100%",
-    height: "100%",
   },
 });
 
