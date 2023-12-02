@@ -5,12 +5,13 @@ import ExploreHeader from "@/components/ExploreHeader";
 import Listings from "@/components/Listings";
 import listingsData from "@/assets/data/airbnb-listings.json";
 import ListingsMap from "@/components/ListingsMap";
-import ListingsDataGeo from "@/assets/data/airbnb-listings.geo.json";
+import listingsDataGeo from "@/assets/data/airbnb-listings.geo.json";
 
 const Page = () => {
   const [category, setCategory] = useState("Tiny homes");
 
   const items = useMemo(() => listingsData as any, []);
+  const getoItems = useMemo(() => listingsDataGeo, []);
 
   const onDataChanged = (category: string) => {
     setCategory(category);
@@ -24,7 +25,7 @@ const Page = () => {
         }}
       />
       {/* <Listings listings={items} category={category} /> */}
-      <ListingsMap listings={ListingsDataGeo} />
+      <ListingsMap listings={getoItems} />
     </View>
   );
 };
