@@ -30,6 +30,8 @@ const ModalHeaderText = () => {
           style={{
             fontFamily: "mon-sb",
             fontSize: 18,
+            color: active === 1 ? "#000" : Colors.grey,
+            textDecorationLine: active === 1 ? "underline" : "none",
           }}
         >
           Experience
